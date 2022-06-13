@@ -16,7 +16,10 @@ react: 18
 ```
 react-router: 6.3
 ```
-
+## 🤍 Versión de MaterialUI
+```
+MaterialUI: 5.8.3
+```
 ## 🔮 Futuro del Proyecto
 
 En proceso...
