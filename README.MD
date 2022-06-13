@@ -8,18 +8,14 @@
 > El repositorio consiste en un JournalApp .</br>
 
 ## ⚛️ Versión de React
-
 ```
 react: 18
 ```
 
 ## 🤍 Versión de Router
-
 ```
 react-router: 6.3
 ```
-
-
 
 ## 🔮 Futuro del Proyecto
 
