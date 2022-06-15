@@ -9,7 +9,7 @@ export const JournalLayout = ({ children }) => {
     <Box sx={{ display: "flex" }}>
       JournalLayout
       {/* navbar drawerWidth*/}
-      <NavBar />
+      <NavBar drawerWidth={drawerWidth} />
       {/* sidebar drawerWidth*/}
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         {/* Toolbar */}
