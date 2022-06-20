@@ -14,7 +14,7 @@ react: 18
 
 ## 🤍 Versión de Router
 ```
-react-router: 6.3
+react-router: 6.3.0
 ```
 ## 🤍 Versión de MaterialUI
 ```
@@ -22,12 +22,17 @@ MaterialUI: 5.8.3
 ```
 ## 🤍 Versión de Redux
 ```
-Redux: 
+Redux: 8.0.2
 ```
 ## 🤍 Versión de Redux-Toolkit
 ```
-Redux-Toolkit: 
+Redux-Toolkit: 1.8.2
 ```
+## 🤍 Versión de Firebase
+```
+firebase: ^9.8.3
+```
+ 
 
 ## 🔮 Futuro del Proyecto
 
