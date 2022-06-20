@@ -20,6 +20,15 @@ react-router: 6.3
 ```
 MaterialUI: 5.8.3
 ```
+## 🤍 Versión de Redux
+```
+Redux: 
+```
+## 🤍 Versión de Redux-Toolkit
+```
+Redux-Toolkit: 
+```
+
 ## 🔮 Futuro del Proyecto
 
 En proceso...
