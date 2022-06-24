@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
-export const useForm = (initialForm = {}) => {
+//Recibe el initialForm y la validacion del formulario
+export const useForm = (initialForm = {}, formValidations = {}) => {
 
     const [formState, setFormState] = useState(initialForm);
 

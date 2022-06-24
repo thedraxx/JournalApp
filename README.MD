@@ -33,6 +33,10 @@ Redux-Toolkit: 1.8.2
 firebase: ^9.8.3
 ```
  
+## 🤍 Versión de Validator
+```
+Validator: ^13.7.0
+```
 
 ## 🔮 Futuro del Proyecto
 

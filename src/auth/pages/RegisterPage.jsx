@@ -12,9 +12,31 @@ export const RegisterPage = () => {
     displayName: "Nombre de usuario",
   };
 
+  //Sirve para validar los campos del formulario, cada una debe cumplirse para ser valido
+  const formValidations = {
+    //Valida el email
+    email: [(value) => value.includes("@"), "El correo debe de tener un @"],
+    //Valida el password
+    password: [
+      (value) => value.length >= 6,
+      "El password debe de tener mas de 6 caracteres",
+    ],
+    //Valida el displayName
+    displayName: [(value) => value.length >= 1, "El nombre es obligatorio"],
+  };
+
   //Usamos el useForm que es un customHook para crear un formulario
-  const { displayName, email, password, onInputChange, formState } =
-    useForm(formData);
+  const {
+    displayName,
+    email,
+    password,
+    onInputChange,
+    formState,
+    isFormValid,
+    displayNameValid,
+    emailValid,
+    passwordValid,
+  } = useForm(formData, formValidations);
 
   // Funcion que se ejecuta al hacer click en el boton
   const onSubmit = (e) => {
@@ -37,6 +59,8 @@ export const RegisterPage = () => {
               name="displayName"
               value={displayName}
               onChange={onInputChange}
+              error={!displayNameValid}
+              helperText={displayNameValid}
             />
           </Grid>
 
