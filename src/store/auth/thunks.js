@@ -10,6 +10,7 @@ export const chekingAuthentication = (email, password) => {
 export const startGoogleLogin = () => {
     return async (dispatch) => {
 
+        //Disparamos el action de chekingCredentials del authslice
         dispatch(chekingCredentials());
         // result me va a decir si el usuario se logueo o no
         //Esto viene del Provider de firebase
@@ -21,6 +22,7 @@ export const startGoogleLogin = () => {
             return;
         }
 
+        //Despachamos el action de login del authslice
         dispatch(dispatch(login(result)));
     }
 }

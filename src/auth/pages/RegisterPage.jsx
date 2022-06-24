@@ -1,15 +1,32 @@
-import { Google } from "@mui/icons-material";
 import { Button, Grid, Link, TextField, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import React from "react";
 import { AuthLayout } from "../layout/AuthLayout";
+import { useForm } from "../../hooks/useForm";
 
 export const RegisterPage = () => {
+  //Valor inicial del formulario
+  const formData = {
+    email: "correo@correo.com",
+    password: "123456",
+    displayName: "Nombre de usuario",
+  };
+
+  //Usamos el useForm que es un customHook para crear un formulario
+  const { displayName, email, password, onInputChange, formState } =
+    useForm(formData);
+
+  // Funcion que se ejecuta al hacer click en el boton
+  const onSubmit = (e) => {
+    e.preventDefault();
+    console.log(formState);
+  };
+
   return (
     <AuthLayout title="Register">
       {/* // Enviamos el componentes a AuthLayout que lo recibe como
       children, sirve para reutilizar el código */}
-      <form>
+      <form onSubmit={onSubmit}>
         <Grid container>
           <Grid item xs={12} sx={{ mt: 2 }}>
             <TextField
@@ -17,6 +34,9 @@ export const RegisterPage = () => {
               type="text"
               placeholder="John Titor"
               fullWidth
+              name="displayName"
+              value={displayName}
+              onChange={onInputChange}
             />
           </Grid>
 
@@ -26,6 +46,9 @@ export const RegisterPage = () => {
               type="email"
               placeholder="correo@correo.com"
               fullWidth
+              name="email"
+              value={email}
+              onChange={onInputChange}
             />
           </Grid>
 
@@ -35,11 +58,14 @@ export const RegisterPage = () => {
               type="password"
               placeholder="contrasena"
               fullWidth
+              name="password"
+              value={password}
+              onChange={onInputChange}
             />
           </Grid>
           <Grid container spacing={2} sx={{ mb: 2, mt: 1 }}>
             <Grid item xs={12}>
-              <Button variant="contained" fullWidth>
+              <Button variant="contained" fullWidth type="submit">
                 Crear Cuenta
               </Button>
             </Grid>
