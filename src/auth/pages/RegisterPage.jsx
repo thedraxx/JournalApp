@@ -38,6 +38,8 @@ export const RegisterPage = () => {
     passwordValid,
   } = useForm(formData, formValidations);
 
+  console.log(displayNameValid);
+
   // Funcion que se ejecuta al hacer click en el boton
   const onSubmit = (e) => {
     e.preventDefault();
