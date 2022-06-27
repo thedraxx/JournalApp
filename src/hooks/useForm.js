@@ -15,8 +15,10 @@ export const useForm = (initialForm = {}, formValidations = {}) => {
     const isFormValid = useMemo(() => {
         // Recorremos el objeto de formValidation
         for (const formValue of Object.keys(formValidation)) {
+            // Si algun campo no es valido retorna false
             if (formValidation[formValue] !== null) return false;
         }
+        // Si no hay ningun error retornamos true
         return true;
 
     }, [formValidation])
@@ -36,11 +38,15 @@ export const useForm = (initialForm = {}, formValidations = {}) => {
     // Esto crea los validadores
     const createValidators = () => {
         const formCheckedValued = {};
-        // Recorremos el objeto de formValidations
+        // Recorremos el objeto de formValidations, que es enviado desde registerPage
         for (const formField of Object.keys(formValidations)) {
             const [fn, errorMessage] = formValidations[formField];
+            // Si el campo no es valido, lo guardamos en el objeto formCheckedValued
+            // Si el campo es valido, lo guardamos en null
+            // Si el campo NO es valido, lo guardamos  errorMessage
             formCheckedValued[`${formField}Valid`] = fn(formState[formField]) ? null : errorMessage;
         }
+        // Guardamos el objeto formCheckedValued en el state formValidation
         setFormValidation(formCheckedValued);
     }
 

@@ -42,15 +42,21 @@ export const RegisterPage = () => {
     displayNameValid,
     emailValid,
     passwordValid,
+    //El formData es el valor inicial del formulario,
+    //El formValidations son las validaciones que se deben cumplir para que el formulario sea valido
   } = useForm(formData, formValidations);
 
   // Funcion que se ejecuta al hacer click en el boton
   const onSubmit = (e) => {
     e.preventDefault();
+    // Cambia el estado de formSubmited a true
     setFormSubmited(true);
-    if (!isFormValid) return;
+    // Si el formulario es valido, se ejecuta la funcion startCreatingUserWithEmailAndPassword
     // Hacemos Dispatch para crear el usuario y lo enviamos al thunks
     dispatch(startCreatingUserWithEmailAndPassword(formState));
+
+    // Si isFormValid es false, significa que hay un campoo no validp se ejecuta el return
+    if (!isFormValid) return;
   };
 
   return (

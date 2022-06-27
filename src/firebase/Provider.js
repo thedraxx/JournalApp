@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, updateProfile } from "firebase/auth";
 import { FirebaseAuth } from "./Config";
 
 
@@ -38,23 +38,25 @@ export const signInWithGoogle = async () => {
 export const registerUserWithEmailAndPassword = async ({ email, password, displayName }) => {
 
     try {
-        console.log(email, password, displayName)
-
         // Registramos el usuario con firebase
         const resp = await createUserWithEmailAndPassword(FirebaseAuth, email, password);
+        // Obtenemos los datos del usuario de la respuesta
         const { uid, photoURL } = resp.user
-        console.log(resp)
-        // Si el usuario se registro correctamente
+        // Actualizamos el displayName del usuario con firebase
+        await updateProfile(FirebaseAuth.currentUser, { displayName })
+
+        // Si el usuario se registro correctamente, retornamos los resultados al thunk
         return {
             ok: true,
-            uid: photoURL, email, displayName
+            uid: photoURL, email, displayName,
         }
     }
 
 
     // Si hay algun error manejamos el error
-    catch {
+    catch (error) {
         console.log(error)
+        // Retornamos el error  al thunk
         return { ok: false, errorMessage: error.message }
     }
 }

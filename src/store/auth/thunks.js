@@ -33,6 +33,13 @@ export const startCreatingUserWithEmailAndPassword = ({ email, password, display
         //Disparamos el action de chekingCredentials del authslice
         dispatch(chekingCredentials());
         // Llamamos a registerUserWithEmailAndPassword del provider de firebase
-        const resp = await registerUserWithEmailAndPassword({ email, password, displayName });
+        // Esperamos a obtener la respuesta que nos dara si el usuario se registro o no
+        const { ok, uid, photoURL, errorMessage } = await registerUserWithEmailAndPassword({ email, password, displayName });
+
+        // Si el usuario no se registro, es decir ok = false, llamamos al logout del authslice
+        if (!ok) return dispatch(logout({ errorMessage }));
+
+        //Si todo salio bien, Despachamos el action de login del authslice
+        dispatch(dispatch(login({ uid, photoURL, email, displayName })));
     }
 }
