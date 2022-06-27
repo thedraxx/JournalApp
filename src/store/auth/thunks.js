@@ -30,7 +30,9 @@ export const startGoogleLogin = () => {
 // Registramos un nuevo usuario 
 export const startCreatingUserWithEmailAndPassword = ({ email, password, displayName }) => {
     return async (dispatch) => {
+        //Disparamos el action de chekingCredentials del authslice
         dispatch(chekingCredentials());
+        // Llamamos a registerUserWithEmailAndPassword del provider de firebase
         const resp = await registerUserWithEmailAndPassword({ email, password, displayName });
     }
 }

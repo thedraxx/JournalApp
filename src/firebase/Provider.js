@@ -33,20 +33,26 @@ export const signInWithGoogle = async () => {
 }
 
 
-// usamos firebase para registrar un nuevo usuario
+// usamos firebase para registrar un nuevo usuario, esta funcion recibe un objeto con los datos del usuario
+// Se llama desde el thunk de startCreatingUserWithEmailAndPassword
 export const registerUserWithEmailAndPassword = async ({ email, password, displayName }) => {
 
     try {
         console.log(email, password, displayName)
+
+        // Registramos el usuario con firebase
         const resp = await createUserWithEmailAndPassword(FirebaseAuth, email, password);
         const { uid, photoURL } = resp.user
         console.log(resp)
+        // Si el usuario se registro correctamente
         return {
             ok: true,
             uid: photoURL, email, displayName
         }
     }
 
+
+    // Si hay algun error manejamos el error
     catch {
         console.log(error)
         return { ok: false, errorMessage: error.message }
