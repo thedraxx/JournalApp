@@ -1,15 +1,25 @@
 import { Google } from "@mui/icons-material";
-import { Button, Grid, Link, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  Button,
+  Grid,
+  Link,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import React, { useMemo } from "react";
 import { AuthLayout } from "../layout/AuthLayout";
 import { useForm } from "../../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
-import { chekingAuthentication, startGoogleLogin } from "../../store/auth/";
+import {
+  startGoogleLogin,
+  startLoginWithEmailAndPassword,
+} from "../../store/auth/";
 
 export const LoginPage = () => {
   //Leemos el store
-  const { status } = useSelector((state) => state.auth);
+  const { status, errorMessage } = useSelector((state) => state.auth);
 
   //Esto sirve para hacer dispatch de la acciones de redux
   const dispatch = useDispatch();
@@ -28,7 +38,7 @@ export const LoginPage = () => {
     e.preventDefault();
     // Hacemos dispatch para que el reducer sepa que se ha hecho un login
     // Al ser algo asincrono, el dispatch se hace al thunks
-    dispatch(chekingAuthentication(email, password));
+    dispatch(startLoginWithEmailAndPassword(email, password));
   };
 
   const onGoogleSignIn = () => {
@@ -65,6 +75,14 @@ export const LoginPage = () => {
               value={password}
               onChange={onInputChange}
             />
+          </Grid>
+          <Grid container>
+            <Grid item xs={12}>
+              <Grid item xs={12} display={!!errorMessage ? "" : "none"}>
+                {/* Esta alerta muestra el mensaje de error de firebase */}
+                <Alert severity="error">{errorMessage}</Alert>
+              </Grid>
+            </Grid>
           </Grid>
           <Grid container spacing={2} sx={{ mb: 2, mt: 1 }}>
             <Grid item xs={12} sm={6}>

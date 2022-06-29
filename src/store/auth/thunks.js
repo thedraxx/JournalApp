@@ -1,7 +1,8 @@
-import { registerUserWithEmailAndPassword, signInWithGoogle } from "../../firebase/Provider";
+import { async } from "@firebase/util";
+import { loginWithEmailAndPassword, registerUserWithEmailAndPassword, signInWithGoogle } from "../../firebase/Provider";
 import { chekingCredentials, login, logout } from "./authSlice";
 
-export const chekingAuthentication = (email, password) => {
+export const chekingAuthentication = () => {
     return async (dispatch) => {
         dispatch(chekingCredentials());
     }
@@ -41,5 +42,20 @@ export const startCreatingUserWithEmailAndPassword = ({ email, password, display
 
         //Si todo salio bien, Despachamos el action de login del authslice
         dispatch(dispatch(login({ uid, photoURL, email, displayName })));
+    }
+}
+
+//Recibimos un email y un password de LoginPage
+export const startLoginWithEmailAndPassword = (email, password) => {
+
+    return async (dispatch) => {
+        // Disparamos el action de chekingCredentials del authslice para que no se pueda loguear
+        dispatch(chekingCredentials());
+        // Llamamos a loginWithEmailAndPassword del provider de firebase y esperamos a obtener la respuesta 
+        const { ok, photoURL, displayName, uid, errorMessage } = await loginWithEmailAndPassword(email, password);
+        // Si el usuario no se logueo, es decir ok = false, llamamos al logout del authslice
+        if (!ok) return dispatch(logout({ errorMessage }));
+        //Si ok es true, Despachamos el action de login del authslice
+        dispatch(dispatch(login(result)));
     }
 }

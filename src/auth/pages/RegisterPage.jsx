@@ -18,9 +18,10 @@ export const RegisterPage = () => {
 
   const [formSubmited, setFormSubmited] = useState(false);
 
+  // Obtenemos el estado y error de la autenticación del store
   const { status, errorMessage } = useSelector((state) => state.auth);
 
-  //Memorizamos el valor que viene de status
+  //Memorizamos el valor que viene de status si es cheking o error
   const isCheckingAuthentication = useMemo(
     () => status === "cheking",
     [status]
