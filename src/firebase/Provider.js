@@ -53,9 +53,9 @@ export const registerUserWithEmailAndPassword = async ({ email, password, displa
     }
 
 
-    // Si hay algun error manejamos el error
+    // Si hay algun error a la hora de registrar, ejemplo que el usuario ya exista, manejamos el error
     catch (error) {
-        console.log(error)
+        // console.log(error)
         // Retornamos el error  al thunk
         return { ok: false, errorMessage: error.message }
     }

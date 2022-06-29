@@ -1,15 +1,30 @@
-import { Button, Grid, Link, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  Button,
+  Grid,
+  Link,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { AuthLayout } from "../layout/AuthLayout";
 import { useForm } from "../../hooks/useForm";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { startCreatingUserWithEmailAndPassword } from "../../store/auth/thunks";
 
 export const RegisterPage = () => {
   const dispatch = useDispatch();
 
   const [formSubmited, setFormSubmited] = useState(false);
+
+  const { status, errorMessage } = useSelector((state) => state.auth);
+
+  //Memorizamos el valor que viene de status
+  const isCheckingAuthentication = useMemo(
+    () => status === "cheking",
+    [status]
+  );
 
   //Valor inicial del formulario
   const formData = {
@@ -109,7 +124,17 @@ export const RegisterPage = () => {
           </Grid>
           <Grid container spacing={2} sx={{ mb: 2, mt: 1 }}>
             <Grid item xs={12}>
-              <Button variant="contained" fullWidth type="submit">
+              <Grid item xs={12} display={!!errorMessage ? "" : "none"}>
+                {/* Esta alerta muestra el mensaje de error de firebase */}
+                <Alert severity="error">{errorMessage}</Alert>
+              </Grid>
+
+              <Button
+                variant="contained"
+                fullWidth
+                type="submit"
+                disabled={isCheckingAuthentication}
+              >
                 Crear Cuenta
               </Button>
             </Grid>
