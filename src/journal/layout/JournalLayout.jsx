@@ -8,7 +8,10 @@ const drawerWidth = 240;
 export const JournalLayout = ({ children }) => {
   //El children viene de JournalPage.jsx y es una función que retorna un componente.
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box
+      sx={{ display: "flex" }}
+      className="animate__animated animate__fadeIn animate__faster"
+    >
       JournalLayout
       {/* Llamamos Barra de navegacion y SideBar */}
       <NavBar drawerWidth={drawerWidth} />

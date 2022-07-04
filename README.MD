@@ -32,8 +32,10 @@ Redux-Toolkit: 1.8.2
 ```
 firebase: ^9.8.3
 ```
- 
-
+## 🤍 Versión de Animate
+```
+Animate: ^4.1.1
+```
 ## 🔮 Futuro del Proyecto
 
 En proceso...

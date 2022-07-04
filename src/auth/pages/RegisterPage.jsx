@@ -76,7 +76,10 @@ export const RegisterPage = () => {
   };
 
   return (
-    <AuthLayout title="Register">
+    <AuthLayout
+      title="Register"
+      className="animate__animated animate__fadeIn animate__faster"
+    >
       {/* // Enviamos el componentes a AuthLayout que lo recibe como
       children, sirve para reutilizar el código */}
       <h1> Is Form Valid: {isFormValid ? "valido" : "Incorrecto"}</h1>
