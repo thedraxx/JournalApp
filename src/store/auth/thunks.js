@@ -56,6 +56,6 @@ export const startLoginWithEmailAndPassword = (email, password) => {
         // Si el usuario no se logueo, es decir ok = false, llamamos al logout del authslice
         if (!ok) return dispatch(logout({ errorMessage }));
         //Si ok es true, Despachamos el action de login del authslice
-        dispatch(dispatch(login(result)));
+        dispatch(dispatch(login({ ok, photoURL, displayName, uid, errorMessage })));
     }
 }
