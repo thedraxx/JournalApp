@@ -1,5 +1,6 @@
 import { async } from "@firebase/util";
-import { loginWithEmailAndPassword, registerUserWithEmailAndPassword, signInWithGoogle } from "../../firebase/Provider";
+import { Logout } from "@mui/icons-material";
+import { loginWithEmailAndPassword, logoutFirebase, registerUserWithEmailAndPassword, signInWithGoogle } from "../../firebase/Provider";
 import { chekingCredentials, login, logout } from "./authSlice";
 
 export const chekingAuthentication = () => {
@@ -57,5 +58,13 @@ export const startLoginWithEmailAndPassword = (email, password) => {
         if (!ok) return dispatch(logout({ errorMessage }));
         //Si ok es true, Despachamos el action de login del authslice
         dispatch(dispatch(login({ ok, photoURL, displayName, uid, errorMessage })));
+    }
+}
+
+// El logout del usuario es una tarea asyncrona por lo que se hace en el thunk y se lo enviamos al provider de firebase
+export const startLogout = () => {
+    return async (dispatch) => {
+        dispatch(logoutFirebase());
+        dispatch(logout({}));
     }
 }

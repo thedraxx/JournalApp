@@ -1,9 +1,19 @@
+import React from "react";
 import { AppBar, Grid, IconButton, Toolbar, Typography } from "@mui/material";
 import { LogoutOutlined, MenuOutlined } from "@mui/icons-material";
-
-import React from "react";
+import { startLogout } from "../../store/auth";
+import { useDispatch } from "react-redux";
 
 export const NavBar = ({ drawerWidth = 240 }) => {
+  const dispatch = useDispatch();
+
+  // Funcion que deslogea al usuario
+  const onLogout = () => {
+    console.log("logut");
+    // La funcion logout es algo asyncrono por lo que primero debemos enviarlo al thunks
+    dispatch(startLogout());
+  };
+
   return (
     <AppBar
       position="fixed"
@@ -31,7 +41,7 @@ export const NavBar = ({ drawerWidth = 240 }) => {
           <Typography variant="h6" noWrap component="div">
             JournalApp
           </Typography>
-          <IconButton color="error">
+          <IconButton color="error" onClick={onLogout}>
             <LogoutOutlined />
           </IconButton>
         </Grid>
