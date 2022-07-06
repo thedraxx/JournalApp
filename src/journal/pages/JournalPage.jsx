@@ -5,10 +5,14 @@ import { NoteView, NothingSelectedView } from "../views";
 import { AddOutlined } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { startNewNote } from "../../store/journal/thunks";
+import { useSelector } from "react-redux";
 
 export const JournalPage = () => {
   // Usamos useDispatch para poder usar el dispatch de Redux
   const dispatch = useDispatch();
+
+  // usamos useSelector para obtener el estado de la aplicación
+  const { isSaving, active } = useSelector((state) => state.journal);
 
   // Mandamos a llamar al dispatch para que cree una nueva nota
   // al ser algo asíncrono, llamamos al thunk
@@ -19,11 +23,15 @@ export const JournalPage = () => {
   return (
     // Enviamos el children a JournalLayout para que lo renderice.
     <JournalLayout>
-      {/* <NothingSelectedView /> */}
-      {/* <NoteView /> */}
+      {
+        // Si no hay ninguna nota activa, mostramos una vista vacía
+        active == null ? <NothingSelectedView /> : <NoteView />
+      }
 
       {/* Boton para agregar notas */}
       <IconButton
+        // Si estamos guardando, no mostramos el boton, isSaving es true o false
+        disabled={isSaving}
         onClick={onClickNewNote}
         size="large"
         sx={{
