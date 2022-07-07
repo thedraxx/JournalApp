@@ -46,7 +46,6 @@ export const startLoadingNotes = () => {
 
         // Esto trae todos los documentos de la colección de la base de datos de firebase
         const notas = await loadNotes(uid);
-
         // Establecemos las notas en el state gracias a la accion setNote y usando dispatch
         dispatch(setNote(notas));
     }
