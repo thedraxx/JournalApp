@@ -50,3 +50,4 @@ export const startLoadingNotes = () => {
         dispatch(setNote(notas));
     }
 }
+
