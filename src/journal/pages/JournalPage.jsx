@@ -24,7 +24,7 @@ export const JournalPage = () => {
     // Enviamos el children a JournalLayout para que lo renderice.
     <JournalLayout>
       {
-        // Si no hay ninguna nota activa, mostramos una vista vacía
+        // Si no hay ninguna nota activa, mostramos una vista vacía sino mostramos la nota
         active == null ? <NothingSelectedView /> : <NoteView />
       }
 

@@ -4,6 +4,7 @@ import { FirebaseAuth } from '../firebase/Config';
 import { login, logout } from '../store/auth';
 import { useEffect } from "react";
 import { onAuthStateChanged } from 'firebase/auth';
+import { startLoadingNotes } from '../store/journal/thunks';
 
 export const useCheckAuth = () => {
     // Importamos el dispatch para poder usarlo
@@ -20,6 +21,8 @@ export const useCheckAuth = () => {
             //Si tengo un usuario llamamos al login del authslice
             const { uid, email, displayName, photoURL } = user;
             dispatch(login({ uid, email, displayName, photoURL }));
+            // Llamamos al thunk startLoadingNotes que carga las notas
+            dispatch(startLoadingNotes());
         });
     }, []);
 
