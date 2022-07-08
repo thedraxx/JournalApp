@@ -13,6 +13,13 @@ import { useForm } from "../../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
 import { startCreatingUserWithEmailAndPassword } from "../../store/auth/thunks";
 
+//Valor inicial del formulario
+const formData = {
+  email: "correo@correo.com",
+  password: "123456",
+  displayName: "Nombre de usuario",
+};
+
 export const RegisterPage = () => {
   const dispatch = useDispatch();
 
@@ -26,13 +33,6 @@ export const RegisterPage = () => {
     () => status === "cheking",
     [status]
   );
-
-  //Valor inicial del formulario
-  const formData = {
-    email: "correo@correo.com",
-    password: "123456",
-    displayName: "Nombre de usuario",
-  };
 
   //Sirve para validar los campos del formulario, cada una debe cumplirse para ser valido
   const formValidations = {

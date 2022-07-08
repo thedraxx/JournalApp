@@ -11,6 +11,11 @@ export const useForm = (initialForm = {}, formValidations = {}) => {
         createValidators()
     }, [formState])
 
+    // Cada vez que cambia la nota del formulario se ejectuta el useEffect
+    useEffect(() => {
+        setFormState(initialForm);
+    }, [initialForm])
+
     // Con el UseMemo memoriza el valor que retorne esto
     const isFormValid = useMemo(() => {
         // Recorremos el objeto de formValidation

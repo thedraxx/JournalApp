@@ -17,6 +17,11 @@ import {
   startLoginWithEmailAndPassword,
 } from "../../store/auth/";
 
+const formData = {
+  email: "",
+  password: "",
+};
+
 export const LoginPage = () => {
   //Leemos el store
   const { status, errorMessage } = useSelector((state) => state.auth);
@@ -25,10 +30,7 @@ export const LoginPage = () => {
   const dispatch = useDispatch();
 
   //Usamos el useForm que es un customHook para crear un formulario
-  const { email, password, onInputChange } = useForm({
-    email: "correo@correo.com",
-    password: "123456",
-  });
+  const { email, password, onInputChange } = useForm(formData);
 
   //Memorizamos el valor de status para no tener que volver a chequearlo
   // Si el status cambia vamos a obtener el valor, sino no
