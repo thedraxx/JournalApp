@@ -3,7 +3,15 @@ import { Note } from '@mui/icons-material';
 import { collection, doc, setDoc } from 'firebase/firestore/lite'
 import { FirebaseDB } from '../../firebase/Config';
 import { loadNotes } from '../../helpers/LoadNotes';
-import { addNewEmptyNote, savingNewNote, setActiveNote, setNote } from './journalSlice';
+import {
+    savingNewNote,
+    addNewEmptyNote,
+    setActiveNote,
+    setNotes,
+    setSaving,
+    noteUpdate,
+} from './journalSlice';
+
 export const startNewNote = () => {
 
     return async (dispatch, getState) => {
@@ -42,12 +50,37 @@ export const startLoadingNotes = () => {
         const { uid } = getState().auth;
 
         // Si no hay un uid lanzamos un error
-        if (!uid) throw new Error('No hay un usuario logueado');
+        if (!uid) throw new Error('El UID del usuario no existe');
 
         // Esto trae todos los documentos de la colección de la base de datos de firebase
         const notas = await loadNotes(uid);
         // Establecemos las notas en el state gracias a la accion setNote y usando dispatch
-        dispatch(setNote(notas));
+        dispatch(setNotes(notas));
     }
 }
 
+export const startSaveNote = () => {
+    return async (dispatch, getState) => {
+        // Le  decime al state que estamos guardando
+        dispatch(setSaving());
+
+        // Usamos getState para obtener el estado actual, en este caso queremos el uid
+        const { uid } = getState().auth;
+
+        // Usamos getState para obtener el estado actual, en este caso queremos la nota que esta activa
+        const { active: note } = getState().journal;
+        const noteToFireStore = { ...note };
+        delete noteToFireStore.id;
+
+        // Aca hacemos referencia a la colección de la base de datos de firebase que queremos actualizar
+        const docRef = doc(FirebaseDB, `${uid}/journal/notes/${note.id}`);
+
+        // Aca actualizamos el documento en FireBaseDB
+        await setDoc(docRef, noteToFireStore, { merge: true });
+
+
+        // Le decimos al state que ya no estamos guardando y mostramos la nota actualizada
+        dispatch(noteUpdate(note));
+
+    }
+}

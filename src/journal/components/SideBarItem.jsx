@@ -1,4 +1,5 @@
-import { TurnedInNot } from "@mui/icons-material";
+import { useMemo } from "react";
+import { useDispatch } from "react-redux";
 import {
   Grid,
   ListItem,
@@ -6,17 +7,16 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import React, { useMemo } from "react";
-import { useDispatch } from "react-redux";
-import { setActiveNote } from "../../store/journal/journalSlice";
+import { TurnedInNot } from "@mui/icons-material";
+import { setActiveNote } from "../../store/journal";
 
-export const SideBarItem = ({ title, body, id, imageUrl = [], date }) => {
+export const SideBarItem = ({ title = "", body, id, date, imageUrls = [] }) => {
   // Hacemos uso del hook useDispatch para poder usar el dispatch
   const dispatch = useDispatch();
 
-  // Activamos la nota cuando se hace click en ella
-  const setActive = () => {
-    dispatch(setActiveNote({ title, body, id, imageUrl, date }));
+  // Esto es una función que se ejecuta cuando el usuario hace click en una nota
+  const onClickNote = () => {
+    dispatch(setActiveNote({ title, body, id, date, imageUrls }));
   };
 
   // Usamos un use Memo, si el titulo es mayor a 17 palabra lo cortamos y sino lo mostramos como viene
@@ -25,8 +25,8 @@ export const SideBarItem = ({ title, body, id, imageUrl = [], date }) => {
   }, [title]);
 
   return (
-    <ListItem button disablePadding onClick={setActive}>
-      <ListItemButton>
+    <ListItem disablePadding>
+      <ListItemButton onClick={onClickNote}>
         <ListItemIcon>
           <TurnedInNot />
         </ListItemIcon>
