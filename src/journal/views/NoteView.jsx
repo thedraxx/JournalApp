@@ -1,6 +1,11 @@
-import { SaveOutlined, SwapCalls } from "@mui/icons-material";
-import { Grid, TextField, Typography } from "@mui/material";
-import React, { useEffect, useMemo } from "react";
+import {
+  SaveOutlined,
+  SwapCalls,
+  Upload,
+  UploadOutlined,
+} from "@mui/icons-material";
+import { Grid, IconButton, TextField, Typography } from "@mui/material";
+import React, { useEffect, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "../../hooks/useForm";
 import { setActiveNote } from "../../store/journal/journalSlice";
@@ -30,6 +35,9 @@ export const NoteView = () => {
     return newDate.toUTCString();
   }, [date]);
 
+  // Usamos useRef hacer referencia al input para subir la imagen
+  const fileInputRef = useRef();
+
   // Usamos useEffect para que escuche cuando cambie la nota, se actualice el formulario
   useEffect(() => {
     // hacemos un dispatch a setActiveNote con los datos actuales de la nota
@@ -50,6 +58,13 @@ export const NoteView = () => {
     dispatch(startSaveNote());
   };
 
+  // Esto funciona para la subir imangenes
+  const onFileInputChange = ({ target }) => {
+    if (target.files === 0) return;
+    // Hacemos dispatch al thunk para que suba las imagenes
+    dispatch(startUploadingFiles(target.files));
+  };
+
   return (
     <Grid
       className="animate__animated animate__fadeIn animate__faster"
@@ -63,6 +78,21 @@ export const NoteView = () => {
         {dateString}
       </Typography>
       <Grid item>
+        <input
+          type="file"
+          multiple
+          onChange={onFileInputChange}
+          styled={{ display: "none" }}
+          ref={fileInputRef}
+        />
+
+        <IconButton
+          color="primary"
+          disabled={isSaving}
+          onClick={() => fileInputRef.current.click()}
+        >
+          <UploadOutlined />
+        </IconButton>
         <button
           color="primary"
           sx={{ padding: 2 }}
