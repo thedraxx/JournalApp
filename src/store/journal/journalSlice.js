@@ -50,7 +50,7 @@ export const journalSlice = createSlice({
                 }
                 return note;
             });
-            // TODO: mostrar mensaje de actualizacion
+            state.messageSaved = `${action.payload.title} guardado correctamente`;
         },
     }
 });

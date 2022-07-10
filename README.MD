@@ -36,6 +36,11 @@ firebase: ^9.8.3
 ```
 Animate: ^4.1.1
 ```
+## 🤍 Versión de SweetAlert2
+```
+SweetAlert2: ^11.4.20
+```
+
 ## 🔮 Futuro del Proyecto
 
 En proceso...

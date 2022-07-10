@@ -1,4 +1,4 @@
-import { SaveOutlined } from "@mui/icons-material";
+import { SaveOutlined, SwapCalls } from "@mui/icons-material";
 import { Grid, TextField, Typography } from "@mui/material";
 import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,6 +6,8 @@ import { useForm } from "../../hooks/useForm";
 import { setActiveNote } from "../../store/journal/journalSlice";
 import { startSaveNote } from "../../store/journal/thunks";
 import { ImageGallery } from "../components";
+import Swal from "sweetalert2";
+import "sweetalert2/dist/sweetalert2.css";
 
 export const NoteView = () => {
   // Usamos useDispatch para acceder al store
@@ -13,7 +15,11 @@ export const NoteView = () => {
 
   // Usamos useSelector para obtener el state de la
   // Nombramos a active note como note para saber que nota estamos viendo
-  const { active: note } = useSelector((state) => state.journal);
+  const {
+    active: note,
+    messageSaved,
+    isSaving,
+  } = useSelector((state) => state.journal);
 
   // Enviamos el objeto note para que el formulario sepa que es la nota que estamos editando
   const { body, title, date, onInputChange, formState } = useForm(note);
@@ -29,6 +35,14 @@ export const NoteView = () => {
     // hacemos un dispatch a setActiveNote con los datos actuales de la nota
     dispatch(setActiveNote(formState));
   }, [formState]);
+
+  // Usamos useEffect para que escuche cuando el messageSaved cambie
+  useEffect(() => {
+    // Si el messageSaved.length es mayor a 0, mostramos quiere decir que se guardo la nota
+    if (messageSaved.length > 0) {
+      Swal.fire("nota actualizada", "", "success");
+    }
+  }, [messageSaved]);
 
   // Esta funcion se ejecuta cuando el usuario presiona el boton de guardar
   const onSaveNote = () => {
@@ -49,7 +63,12 @@ export const NoteView = () => {
         {dateString}
       </Typography>
       <Grid item>
-        <button color="primary" sx={{ padding: 2 }} onClick={onSaveNote}>
+        <button
+          color="primary"
+          sx={{ padding: 2 }}
+          onClick={onSaveNote}
+          disabled={isSaving}
+        >
           <SaveOutlined sx={{ fontSize: 30, mr: 1 }} />
           Guardar
         </button>
