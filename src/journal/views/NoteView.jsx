@@ -9,7 +9,7 @@ import React, { useEffect, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "../../hooks/useForm";
 import { setActiveNote } from "../../store/journal/journalSlice";
-import { startSaveNote } from "../../store/journal/thunks";
+import { startSaveNote, startUploadingFiles } from "../../store/journal/thunks";
 import { ImageGallery } from "../components";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.css";

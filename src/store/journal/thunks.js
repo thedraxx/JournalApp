@@ -1,7 +1,8 @@
 import { async } from '@firebase/util';
-import { Note } from '@mui/icons-material';
+import { FileUpload, Note } from '@mui/icons-material';
 import { collection, doc, setDoc } from 'firebase/firestore/lite'
 import { FirebaseDB } from '../../firebase/Config';
+import { fileUpload } from '../../helpers';
 import { loadNotes } from '../../helpers/LoadNotes';
 import {
     savingNewNote,
@@ -82,5 +83,13 @@ export const startSaveNote = () => {
         // Le decimos al state que ya no estamos guardando y mostramos la nota actualizada
         dispatch(noteUpdate(note));
 
+    }
+}
+
+// Esto sube los archivos a  cloudinary
+export const startUploadingFiles = (files = []) => {
+    return async (dispatch, getState) => {
+        dispatch(setSaving());
+        await fileUpload(files[0]);
     }
 }
