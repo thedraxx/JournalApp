@@ -22,13 +22,11 @@ export const fileUpload = async (file) => {
             body: formData,
         });
 
-        console.log(resp)
         // Si la respuesta no es 200 lanzamos un error
         if (!resp.ok) throw new Error('no se pudo subir imagen')
 
         // Si todo sale bien, obtenemos el json de la respuesta
         const cloudResp = await resp.json();
-        console.log(cloudResp);
 
         // Si todo sale bien, retornamos el url de la imagen
         return cloudResp.secure_url;

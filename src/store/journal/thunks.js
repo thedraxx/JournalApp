@@ -11,6 +11,7 @@ import {
     setNotes,
     setSaving,
     noteUpdate,
+    setPhotoToActiveNote,
 } from './journalSlice';
 
 export const startNewNote = () => {
@@ -90,6 +91,16 @@ export const startSaveNote = () => {
 export const startUploadingFiles = (files = []) => {
     return async (dispatch, getState) => {
         dispatch(setSaving());
-        await fileUpload(files[0]);
+
+        // Creamos un arreglo vacio
+        const fileUploadPromises = [];
+        // Usamos un For Of para recorrer el arreglo de archivos e ir metiendo cada archivo en el arreglo de promesas
+        for (const file of files) {
+            fileUploadPromises.push(fileUpload(file));
+        }
+        const photosUrls = await Promise.all(fileUploadPromises);
+
+        // Establecemos las fotos en el state gracias a la accion setPhotoToActiveNote y usando dispatch
+        dispatch(setPhotoToActiveNote(photosUrls));
     }
 }

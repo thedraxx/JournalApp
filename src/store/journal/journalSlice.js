@@ -52,6 +52,14 @@ export const journalSlice = createSlice({
             });
             state.messageSaved = `${action.payload.title} guardado correctamente`;
         },
+
+        setPhotoToActiveNote: (state, action) => {
+            // Le decimos que ya no esta guardando
+            state.isSaving = false;
+            // Recorremos el array de las notas que tenemos en el state
+            // Guardamos las imagenes que ya teniamos y les agregamos las imagenes que estan viniendo
+            state.active.imageUrls = [...state.active.imageUrls, ...action.payload];
+        }
     }
 });
 
@@ -63,4 +71,5 @@ export const {
     setNotes,
     setSaving,
     noteUpdate,
+    setPhotoToActiveNote,
 } = journalSlice.actions;
