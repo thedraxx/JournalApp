@@ -9,7 +9,6 @@ export const NavBar = ({ drawerWidth = 240 }) => {
 
   // Funcion que deslogea al usuario
   const onLogout = () => {
-    console.log("logut");
     // La funcion logout es algo asyncrono por lo que primero debemos enviarlo al thunks
     dispatch(startLogout());
   };

@@ -1,6 +1,6 @@
 import { async } from '@firebase/util';
 import { FileUpload, Note } from '@mui/icons-material';
-import { collection, doc, setDoc } from 'firebase/firestore/lite'
+import { collection, deleteDoc, doc, setDoc } from 'firebase/firestore/lite'
 import { FirebaseDB } from '../../firebase/Config';
 import { fileUpload } from '../../helpers';
 import { loadNotes } from '../../helpers/LoadNotes';
@@ -12,6 +12,7 @@ import {
     setSaving,
     noteUpdate,
     setPhotoToActiveNote,
+    deleteNoteById,
 } from './journalSlice';
 
 export const startNewNote = () => {
@@ -102,5 +103,21 @@ export const startUploadingFiles = (files = []) => {
 
         // Establecemos las fotos en el state gracias a la accion setPhotoToActiveNote y usando dispatch
         dispatch(setPhotoToActiveNote(photosUrls));
+    }
+}
+
+export const startDeletingNote = () => {
+    return async (dispatch, getState) => {
+
+        // Usamos getState para obtener el estado actual, en este caso queremos el uid y la nota
+        const { uid } = getState().auth;
+        const { active: note } = getState().journal;
+
+        // Aca hacemos referencia a la colección de la base de datos de firebase que queremos eliminar
+        const docRef = doc(FirebaseDB, `${uid}/journal/notes/${note.id}`);
+        // Aca eliminamos el documento en FireBaseDB
+        await deleteDoc(docRef);
+        // Le lo borramos del state gracias a la accion deleteNoteById y usando dispatch
+        dispatch(deleteNoteById(note.id));
     }
 }

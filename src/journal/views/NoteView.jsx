@@ -1,4 +1,5 @@
 import {
+  DeleteOutline,
   SaveOutlined,
   SwapCalls,
   Upload,
@@ -9,7 +10,11 @@ import React, { useEffect, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "../../hooks/useForm";
 import { setActiveNote } from "../../store/journal/journalSlice";
-import { startSaveNote, startUploadingFiles } from "../../store/journal/thunks";
+import {
+  startDeletingNote,
+  startSaveNote,
+  startUploadingFiles,
+} from "../../store/journal/thunks";
 import { ImageGallery } from "../components";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.css";
@@ -63,6 +68,11 @@ export const NoteView = () => {
     if (target.files === 0) return;
     // Hacemos dispatch al thunk para que suba las imagenes
     dispatch(startUploadingFiles(target.files));
+  };
+
+  // Esta funcion se ejecuta cuando el usuario presiona el boton de eliminar
+  const onDelete = () => {
+    dispatch(startDeletingNote());
   };
 
   return (
@@ -126,6 +136,13 @@ export const NoteView = () => {
           value={body}
           onChange={onInputChange}
         />
+      </Grid>
+
+      <Grid container justifyContent="end">
+        <button onClick={onDelete} sx={{ mt: 2 }} color={"error"}>
+          <DeleteOutline />
+          Borrar
+        </button>
       </Grid>
       {/* Image Galery  es un componente*/}
       <ImageGallery images={note.imageUrls} />
