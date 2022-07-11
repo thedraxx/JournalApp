@@ -1,6 +1,7 @@
 import { async } from "@firebase/util";
 import { Logout } from "@mui/icons-material";
 import { loginWithEmailAndPassword, logoutFirebase, registerUserWithEmailAndPassword, signInWithGoogle } from "../../firebase/Provider";
+import { clearNotesLogout } from "../journal/journalSlice";
 import { chekingCredentials, login, logout } from "./authSlice";
 
 export const chekingAuthentication = () => {
@@ -64,7 +65,13 @@ export const startLoginWithEmailAndPassword = (email, password) => {
 // El logout del usuario es una tarea asyncrona por lo que se hace en el thunk y se lo enviamos al provider de firebase
 export const startLogout = () => {
     return async (dispatch) => {
-        dispatch(logoutFirebase());
+        // Desloguemos del provider de firebase
+        await logoutFirebase();
+
+        // Despachamos el action de ClearNotesLogout del journalSlice para limpiar todo
+        dispatch(clearNotesLogout());
+
+        // Despachamos el action de logout del authslice
         dispatch(logout({}));
     }
 }

@@ -59,6 +59,13 @@ export const journalSlice = createSlice({
             // Recorremos el array de las notas que tenemos en el state
             // Guardamos las imagenes que ya teniamos y les agregamos las imagenes que estan viniendo
             state.active.imageUrls = [...state.active.imageUrls, ...action.payload];
+        },
+
+        clearNotesLogout: (state) => {
+            state.isSaving = false;
+            state.messageSaved = '';
+            state.notes = [];
+            state.active = null;
         }
     }
 });
@@ -72,4 +79,5 @@ export const {
     setSaving,
     noteUpdate,
     setPhotoToActiveNote,
+    clearNotesLogout,
 } = journalSlice.actions;
